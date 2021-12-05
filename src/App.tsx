@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css';
 
-function App() {
+import { Layout } from 'antd';
+import React from 'react';
+
+import logo from './assets/dolbom_logo.png';
+import { Router } from './routes';
+
+const { Header } = Layout;
+
+export const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout style={{ height: '100vh' }}>
+      <Header
+        style={{ backgroundColor: 'white', borderBottom: '1px solid #e9e9e9' }}
+      >
+        <img
+          src={logo}
+          alt="logo"
+          style={{
+            float: 'left',
+            width: 70,
+            marginTop: 12,
+          }}
+        />
+      </Header>
+      <Layout>
+        <Router />
+      </Layout>
+    </Layout>
   );
-}
+};
 
 export default App;
