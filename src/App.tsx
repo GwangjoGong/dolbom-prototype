@@ -11,9 +11,15 @@ const { Header } = Layout;
 
 export const App: React.FC = () => {
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout>
       <Header
-        style={{ backgroundColor: 'white', borderBottom: '1px solid #e9e9e9' }}
+        style={{
+          backgroundColor: 'white',
+          borderBottom: '1px solid #e9e9e9',
+          height: 64,
+          width: '100%',
+          position: 'fixed',
+        }}
       >
         <img
           src={logo}
@@ -25,7 +31,7 @@ export const App: React.FC = () => {
           }}
         />
       </Header>
-      <Layout>
+      <Layout style={{ height: 'calc(100vh - 64px)', marginTop: 64 }}>
         <Router />
       </Layout>
     </Layout>

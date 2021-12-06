@@ -34,9 +34,9 @@ export const SideNav: React.FC = () => {
         <Menu.Item key="guide" icon={<FileOutlined />}>
           <Link to="/guide">중재지침</Link>
         </Menu.Item>
-        <Menu.Item key="settings" icon={<SettingOutlined />}>
+        {/* <Menu.Item key="settings" icon={<SettingOutlined />}>
           <Link to="/settings">설정</Link>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     </Sider>
   );
