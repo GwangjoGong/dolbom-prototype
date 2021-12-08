@@ -1,9 +1,20 @@
 import 'moment/locale/ko';
+import 'react-h5-audio-player/lib/styles.css';
 
-import { Card, Col, DatePicker, Layout, Radio, Row, Typography } from 'antd';
+import {
+  Card,
+  Col,
+  DatePicker,
+  Layout,
+  Modal,
+  Radio,
+  Row,
+  Typography,
+} from 'antd';
 import locale from 'antd/lib/date-picker/locale/ko_KR';
 import moment from 'moment';
 import React from 'react';
+import AudioPlayer from 'react-h5-audio-player';
 
 import { Bullet, Column, Line, Pie, Radar } from '@ant-design/charts';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
@@ -222,6 +233,9 @@ export const Home: React.FC = () => {
   const [date, setDate] = React.useState(moment());
   const [loading, setLoading] = React.useState(true);
   const [done, setDone] = React.useState(false);
+
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalData, setModalData] = React.useState<any[]>();
 
   const weekFormat = 'MM/DD';
   const koreanDays = ['월', '화', '수', '목', '금', '토', '일'];
@@ -636,6 +650,15 @@ export const Home: React.FC = () => {
               legend={{
                 position: 'right',
               }}
+              onReady={plot => {
+                //@ts-ignore
+                plot.on('plot:click', e => {
+                  const { x, y } = e;
+                  const tooltipData = plot.chart.getTooltipItems({ x, y });
+                  setModalData(tooltipData);
+                  setModalVisible(true);
+                });
+              }}
             />
           </Card>
         </Col>
@@ -903,6 +926,41 @@ export const Home: React.FC = () => {
           </Card>
         </Col>
       </Row>
+      <Modal
+        visible={modalVisible}
+        centered
+        cancelText="확인"
+        onCancel={() => setModalVisible(false)}
+        okButtonProps={{
+          style: {
+            display: 'none',
+          },
+        }}
+      >
+        <Typography.Title level={5} style={{ marginBottom: 20 }}>
+          상세정보
+        </Typography.Title>
+        {modalData?.map(datum => (
+          <>
+            <Row>
+              <Col span={5}>
+                <Typography.Text strong>{datum.name}</Typography.Text>
+              </Col>
+              <Col span={5}>
+                <Typography.Text>{datum.value}회</Typography.Text>
+              </Col>
+            </Row>
+          </>
+        ))}
+        <Typography.Title level={5} style={{ marginTop: 30, marginBottom: 10 }}>
+          녹음본
+        </Typography.Title>
+        <AudioPlayer
+          src={
+            'https://github.com/amsehili/noise-of-life/blob/master/BabyCry/babyCry-003.wav?raw=true'
+          }
+        />
+      </Modal>
     </Layout>
   );
 };
