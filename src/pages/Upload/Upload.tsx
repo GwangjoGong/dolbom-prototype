@@ -518,10 +518,9 @@ export const Upload: React.FC = () => {
         ) : (
           <Dragger
             height={500}
-            // accept=".wav"
+            accept=".wav"
             multiple={false}
             onChange={info => {
-              console.log(info);
               setLoading(true);
               setDirty(true);
             }}
