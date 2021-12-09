@@ -124,107 +124,107 @@ const durData = [
 const statData = [
   {
     day: '월요일',
-    label: '소리 지르기',
+    label: '놀이 ',
     value: 0,
   },
   {
     day: '화요일',
-    label: '소리 지르기',
+    label: '놀이 ',
     value: 1,
   },
   {
     day: '수요일',
-    label: '소리 지르기',
+    label: '놀이 ',
     value: 4,
   },
   {
     day: '목요일',
-    label: '소리 지르기',
+    label: '놀이 ',
     value: 1,
   },
   {
     day: '금요일',
-    label: '소리 지르기',
+    label: '놀이 ',
     value: 0,
   },
   {
     day: '토요일',
-    label: '소리 지르기',
+    label: '놀이 ',
     value: 2,
   },
   {
     day: '일요일',
-    label: '소리 지르기',
+    label: '놀이 ',
     value: 1,
   },
   {
     day: '월요일',
-    label: '울기',
+    label: '학교',
     value: 1,
   },
   {
     day: '화요일',
-    label: '울기',
+    label: '학교',
     value: 0,
   },
   {
     day: '수요일',
-    label: '울기',
+    label: '학교',
     value: 1,
   },
   {
     day: '목요일',
-    label: '울기',
+    label: '학교',
     value: 3,
   },
   {
     day: '금요일',
-    label: '울기',
+    label: '학교',
     value: 2,
   },
   {
     day: '토요일',
-    label: '울기',
+    label: '학교',
     value: 1,
   },
   {
     day: '일요일',
-    label: '울기',
+    label: '학교',
     value: 2,
   },
   {
     day: '월요일',
-    label: '기타',
+    label: '저녁',
     value: 1,
   },
   {
     day: '화요일',
-    label: '기타',
+    label: '저녁',
     value: 0,
   },
   {
     day: '수요일',
-    label: '기타',
+    label: '저녁',
     value: 0,
   },
   {
     day: '목요일',
-    label: '기타',
+    label: '저녁',
     value: 1,
   },
   {
     day: '금요일',
-    label: '기타',
+    label: '저녁',
     value: 0,
   },
   {
     day: '토요일',
-    label: '기타',
+    label: '저녁',
     value: 1,
   },
   {
     day: '일요일',
-    label: '기타',
+    label: '저녁',
     value: 0,
   },
 ];
@@ -294,26 +294,30 @@ export const Home: React.FC = () => {
       </Card>
 
       <Row gutter={20}>
-        <Col span={8}>
+        <Col span={12}>
           <Card>
             <Row>
               <Col span={12}>
                 <Typography.Title level={5}>평균 빈도</Typography.Title>
                 <Typography.Title level={3}>
                   {isCurrentWeek
-                    ? (done
-                        ? [
-                            ...freqData.slice(0, moment().days() - 1),
-                            {
-                              day: `${koreanDays[moment().days() - 1]}요일`,
-                              value: 2,
-                            },
-                          ].slice(0, moment().days())
-                        : freqData.slice(0, moment().days() - 1)
-                      ).reduce((a, b) => a + b.value, 0) /
-                      (moment().days() - 1)
-                    : freqData.reduce((a, b) => a + b.value, 0) /
-                      freqData.length}
+                    ? (
+                        (done
+                          ? [
+                              ...freqData.slice(0, moment().days() - 1),
+                              {
+                                day: `${koreanDays[moment().days() - 1]}요일`,
+                                value: 2,
+                              },
+                            ].slice(0, moment().days())
+                          : freqData.slice(0, moment().days() - 1)
+                        ).reduce((a, b) => a + b.value, 0) /
+                        (moment().days() - 1)
+                      ).toFixed(2)
+                    : (
+                        freqData.reduce((a, b) => a + b.value, 0) /
+                        freqData.length
+                      ).toFixed(2)}
                   회
                 </Typography.Title>
                 <div
@@ -379,7 +383,7 @@ export const Home: React.FC = () => {
             </Row>
           </Card>
         </Col>
-        <Col span={8}>
+        {/* <Col span={8}>
           <Card>
             <Row>
               <Col span={12}>
@@ -463,8 +467,8 @@ export const Home: React.FC = () => {
               </Col>
             </Row>
           </Card>
-        </Col>
-        <Col span={8}>
+        </Col> */}
+        <Col span={12}>
           <Card>
             <Row>
               <Col span={12}>
@@ -559,13 +563,13 @@ export const Home: React.FC = () => {
             <Row style={{ marginBottom: 20 }}>
               <Col span={18}>
                 <Typography.Title level={5}>
-                  문제행동별 주간 통계
+                  문제행동별 주간 추이
                 </Typography.Title>
               </Col>
               <Col span={6}>
                 <Radio.Group defaultValue="빈도" style={{ float: 'right' }}>
                   <Radio.Button value="빈도">빈도</Radio.Button>
-                  <Radio.Button value="강도">강도</Radio.Button>
+                  {/* <Radio.Button value="강도">강도</Radio.Button> */}
                   <Radio.Button value="지속시간">지속 시간</Radio.Button>
                 </Radio.Group>
               </Col>
@@ -586,7 +590,7 @@ export const Home: React.FC = () => {
                           ? [
                               {
                                 day: `${koreanDays[moment().days() - 1]}요일`,
-                                label: '울기',
+                                label: '학교',
                                 value: 2,
                               },
                             ]
@@ -664,7 +668,7 @@ export const Home: React.FC = () => {
         </Col>
         <Col span={8}>
           <Card style={{ height: '100%' }}>
-            <Typography.Title level={5}>일정별 주간 통계</Typography.Title>
+            <Typography.Title level={5}>문제행동별 평균 빈도</Typography.Title>
             <Bullet
               style={{ marginTop: 40 }}
               data={
@@ -673,12 +677,12 @@ export const Home: React.FC = () => {
                   : [
                       {
                         title: '학교',
-                        ranges: [1.5, 3, 4],
+                        ranges: [1, 2.5, 4],
                         measure: [
                           isCurrentWeek
                             ? (
-                                (3.2 + (done ? 1.0 : 0)) /
-                                (8 - moment().days())
+                                ((3.2 + (done ? 1.0 : 0)) * moment().days()) /
+                                7
                               ).toFixed(2)
                             : 3.2,
                         ],
@@ -686,12 +690,12 @@ export const Home: React.FC = () => {
                       },
                       {
                         title: '놀이',
-                        ranges: [1.5, 3, 4],
+                        ranges: [1, 2.5, 4],
                         measure: [
                           isCurrentWeek
                             ? (
-                                (2.4 + (done ? 1.0 : 0)) /
-                                (8 - moment().days())
+                                ((2.4 + (done ? 1.0 : 0)) * moment().days()) /
+                                7
                               ).toFixed(2)
                             : 2.4,
                         ],
@@ -699,18 +703,12 @@ export const Home: React.FC = () => {
                       },
                       {
                         title: '저녁',
-                        ranges: [1.5, 3, 4],
+                        ranges: [1, 2.5, 4],
                         measure: [
                           isCurrentWeek
-                            ? (1.8 / (8 - moment().days())).toFixed(2)
+                            ? ((1.8 * moment().days()) / 7).toFixed(2)
                             : 1.8,
                         ],
-                        target: 0,
-                      },
-                      {
-                        title: '기타',
-                        ranges: [1.5, 3, 4],
-                        measure: [isCurrentWeek ? 0 : 0.6],
                         target: 0,
                       },
                     ].reverse()
@@ -740,7 +738,7 @@ export const Home: React.FC = () => {
       </Row>
 
       <Row gutter={20} style={{ marginTop: 20 }}>
-        <Col span={8}>
+        <Col span={12}>
           <Card>
             <Typography.Title level={5} style={{ marginBottom: 20 }}>
               문제행동별 평균 빈도
@@ -758,13 +756,13 @@ export const Home: React.FC = () => {
                   ? []
                   : [
                       {
-                        type: '소리 지르기',
+                        type: '놀이 ',
                         value: isCurrentWeek
                           ? Math.floor((1.6 * moment().days()) / 4)
                           : 1.6,
                       },
                       {
-                        type: '울기',
+                        type: '학교',
                         value: isCurrentWeek
                           ? Math.floor(
                               ((done ? 4.8 : 2.8) * moment().days()) / 4,
@@ -772,7 +770,7 @@ export const Home: React.FC = () => {
                           : 2.8,
                       },
                       {
-                        type: '기타',
+                        type: '저녁',
                         value: isCurrentWeek
                           ? Math.floor((0.4 * moment().days()) / 4)
                           : 0.44,
@@ -795,7 +793,7 @@ export const Home: React.FC = () => {
             />
           </Card>
         </Col>
-        <Col span={8}>
+        {/* <Col span={8}>
           <Card>
             <Typography.Title level={5} style={{ marginBottom: 20 }}>
               문제행동별 평균 강도
@@ -814,13 +812,13 @@ export const Home: React.FC = () => {
                   ? []
                   : [
                       {
-                        type: '소리 지르기',
+                        type: '놀이 ',
                         value: isCurrentWeek
                           ? Math.floor((2.28 * moment().days()) / 7)
                           : 4.18,
                       },
                       {
-                        type: '울기',
+                        type: '학교',
                         value: isCurrentWeek
                           ? Math.floor(
                               ((done ? 8.8 : 4.18) * moment().days()) / 7,
@@ -828,7 +826,7 @@ export const Home: React.FC = () => {
                           : 2.28,
                       },
                       {
-                        type: '기타',
+                        type: '저녁',
                         value: isCurrentWeek
                           ? Math.floor((1.13 * moment().days()) / 7)
                           : 1.13,
@@ -845,8 +843,8 @@ export const Home: React.FC = () => {
               }}
             />
           </Card>
-        </Col>
-        <Col span={8}>
+        </Col> */}
+        <Col span={12}>
           <Card>
             <Typography.Title level={5} style={{ marginBottom: 20 }}>
               문제행동별 평균 지속시간
@@ -892,21 +890,21 @@ export const Home: React.FC = () => {
                   ? []
                   : [
                       {
-                        type: '소리 지르기',
+                        type: '놀이 ',
                         value: isCurrentWeek
                           ? Math.floor((4 * moment().days()) / 7)
                           : 4,
                         color: '#5b8ff9',
                       },
                       {
-                        type: '울기',
+                        type: '학교',
                         value: isCurrentWeek
                           ? Math.floor(((done ? 15 : 9) * moment().days()) / 7)
                           : 9,
                         color: '#2ecc71',
                       },
                       {
-                        type: '기타',
+                        type: '저녁',
                         value: isCurrentWeek
                           ? Math.floor((2 * moment().days()) / 7)
                           : 2,

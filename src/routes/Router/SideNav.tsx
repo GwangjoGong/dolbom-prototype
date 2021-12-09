@@ -2,7 +2,11 @@ import { Layout, Menu } from 'antd';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { FileOutlined, HomeOutlined, UploadOutlined } from '@ant-design/icons';
+import {
+  CloudSyncOutlined,
+  FileOutlined,
+  HomeOutlined,
+} from '@ant-design/icons';
 
 const { Sider } = Layout;
 export const SideNav: React.FC = () => {
@@ -23,8 +27,8 @@ export const SideNav: React.FC = () => {
         <Menu.Item key="home" icon={<HomeOutlined />}>
           <Link to="/home">홈</Link>
         </Menu.Item>
-        <Menu.Item key="upload" icon={<UploadOutlined />}>
-          <Link to="/upload">업로드</Link>
+        <Menu.Item key="upload" icon={<CloudSyncOutlined />}>
+          <Link to="/upload">디바이스 연동</Link>
         </Menu.Item>
         <Menu.Item key="comment" icon={<FileOutlined />}>
           <Link to="/comment">중재지침</Link>

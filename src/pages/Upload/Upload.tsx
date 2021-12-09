@@ -16,6 +16,7 @@ import {
   Typography,
 } from 'antd';
 import Dragger from 'antd/lib/upload/Dragger';
+import moment from 'moment';
 import React from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import { useNavigate } from 'react-router-dom';
@@ -85,7 +86,7 @@ export const Upload: React.FC = () => {
 
   return (
     <Layout>
-      <Typography.Title level={4}>문제행동 분석</Typography.Title>
+      <Typography.Title level={4}>디바이스 연동</Typography.Title>
       <Card>
         {loading ? (
           <div
@@ -99,7 +100,7 @@ export const Upload: React.FC = () => {
           >
             <Spin
               size="large"
-              tip="분석 중입니다..."
+              tip="데이터 연동 중입니다..."
               indicator={
                 <LoadingOutlined
                   style={{ fontSize: 48, marginBottom: 10 }}
@@ -110,15 +111,15 @@ export const Upload: React.FC = () => {
           </div>
         ) : dirty ? (
           <>
-            <Typography.Title level={5}>분석 결과</Typography.Title>
+            <Typography.Title level={5}>데이터 연동 결과</Typography.Title>
             <Typography.Title level={3}>
               금일 문제행동이 2회 발견되었습니다.
             </Typography.Title>
             <Typography.Title level={5} style={{ marginTop: 40 }}>
-              문제행동 태깅
+              일정별 발생 현황
             </Typography.Title>
             <Typography.Text style={{ color: '#a9a9a9' }}>
-              하단 일정표 내 빨간색 상자를 클릭해서 관련 정보를 입력해주세요.
+              하단 일정표에서 확인 후, 하단 버튼을 눌러 정보를 저장해주세요.
             </Typography.Text>
             <div
               style={{
@@ -227,7 +228,7 @@ export const Upload: React.FC = () => {
                 >
                   저녁
                 </div>
-                <Tooltip placement="top" title="문제행동#1">
+                <Tooltip placement="top" title="문제행동#1 - 학교">
                   <div
                     className={selected === 1 ? '' : 'hoverable'}
                     style={{
@@ -244,20 +245,14 @@ export const Upload: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       color: 'white',
-                      border: `2px solid ${
-                        tagged.includes(1)
-                          ? '#6c7e9b'
-                          : selected === 1
-                          ? '#c0392b'
-                          : 'white'
-                      }`,
+                      border: 'white',
                       boxSizing: 'border-box',
                       cursor: 'pointer',
                     }}
                     onClick={() => onSelect(1)}
                   />
                 </Tooltip>
-                <Tooltip placement="top" title="문제행동#2">
+                <Tooltip placement="top" title="문제행동#2 - 놀이">
                   <div
                     className={selected === 2 ? '' : 'hoverable'}
                     style={{
@@ -274,13 +269,7 @@ export const Upload: React.FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       color: 'white',
-                      border: `2px solid ${
-                        tagged.includes(2)
-                          ? '#6c7e9b'
-                          : selected === 2
-                          ? '#c0392b'
-                          : 'white'
-                      }`,
+                      border: 'white',
                       boxSizing: 'border-box',
                       cursor: 'pointer',
                     }}
@@ -317,7 +306,22 @@ export const Upload: React.FC = () => {
                   ))}
               </Row>
             </div>
-            <Typography.Title level={5} style={{ marginTop: 40 }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: 40,
+              }}
+            >
+              <Button
+                type="primary"
+                style={{ width: 200 }}
+                onClick={onFinalSubmit}
+              >
+                저장
+              </Button>
+            </div>
+            {/* <Typography.Title level={5} style={{ marginTop: 40 }}>
               {`문제행동#${selected}`}
             </Typography.Title>
             <Row style={{ marginTop: 20 }}>
@@ -513,30 +517,72 @@ export const Upload: React.FC = () => {
                   제출
                 </Button>
               </Col>
-            </Row>
+            </Row> */}
           </>
         ) : (
-          <Dragger
-            height={500}
-            accept=".wav"
-            multiple={false}
-            onChange={info => {
-              setLoading(true);
-              setDirty(true);
-            }}
-            onDrop={() => {
-              setLoading(true);
-              setDirty(true);
-            }}
-          >
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">
-              이 곳을 클릭하거나 파일을 드래그해서 업로드해주세요.
-            </p>
-            <p className="ant-upload-hint">.wav 파일만 업로드 가능합니다.</p>
-          </Dragger>
+          <>
+            <Typography.Title level={5}>디바이스 목록</Typography.Title>
+
+            <Card bordered style={{ maxWidth: '400px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <Typography.Title level={5}>디바이스 #1</Typography.Title>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography.Text style={{ color: '#a9a9a9', marginRight: 8 }}>
+                    정상
+                  </Typography.Text>
+                  <div
+                    style={{
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      backgroundColor: '#2ecc71',
+                    }}
+                  />
+                </div>
+              </div>
+              <Typography.Text style={{ color: '#a9a9a9' }}>
+                최근 연동일자 :{' '}
+                {moment().subtract(1, 'days').format('YYYY-MM-DD')}
+              </Typography.Text>
+              <Button
+                type="primary"
+                style={{ float: 'right', marginTop: 40 }}
+                onClick={() => {
+                  setLoading(true);
+                  setDirty(true);
+                }}
+              >
+                데이터 불러오기
+              </Button>
+            </Card>
+          </>
+          // <Dragger
+          //   height={500}
+          //   accept=".wav"
+          //   multiple={false}
+          //   onChange={info => {
+          //     setLoading(true);
+          //     setDirty(true);
+          //   }}
+          //   onDrop={() => {
+          //     setLoading(true);
+          //     setDirty(true);
+          //   }}
+          // >
+          //   <p className="ant-upload-drag-icon">
+          //     <InboxOutlined />
+          //   </p>
+          //   <p className="ant-upload-text">
+          //     이 곳을 클릭하거나 파일을 드래그해서 업로드해주세요.
+          //   </p>
+          //   <p className="ant-upload-hint">.wav 파일만 업로드 가능합니다.</p>
+          // </Dragger>
         )}
       </Card>
     </Layout>
